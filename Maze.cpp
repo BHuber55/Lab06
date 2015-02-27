@@ -48,13 +48,13 @@ Cell* Maze::processBackTrack(StackLinked<Cell>* stack)		//should be done.
 
 	while(top_cell->getDir() == DEAD_END)  //need to back track
 	{
-		top_cell = stack->pop();
-
 		//remove the cell and set the maze location to BACKTRACK (the maze is a Matrix)	--Boshart]
 		maze->setElement(top_cell->getRow(), top_cell->getCol(), BACKTRACK);
 
+		stack->pop();
+
 		//look at the next cell
-		Cell* top_cell = stack->peek();
+		top_cell = stack->peek();
 
 		Sleep(75);      //slow down the maze traversal
 		gui->update();  //update whenever the color of a cell has been changed
@@ -95,15 +95,18 @@ bool Maze::isSolved(Cell* curr_cell, StackLinked<Cell>* stack)
 //backing through the maze, setting the solution color to PATH
 void Maze::processSolution(StackLinked<Cell>* stack)
 {
+	Cell* curr_cell = stack->pop();
 	//DO THIS
 	//the stack has the solution path stored
-	while (isSolved())
+	while (!stack->isEmpty())
 	{
+		maze->setElement(curr_cell->getRow(), curr_cell->getCol(), PATH);
+
 		//get the next cell from the stack
 		Cell* curr_cell = stack->pop();
 
 		//update the maze location to PATH
-		maze->setElement(curr_cell->getRow(), curr_cell->getCol() , 4);
+		maze->setElement(curr_cell->getRow(), curr_cell->getCol() , PATH);
 
 		gui->update();
 	}
@@ -139,7 +142,7 @@ bool Maze::traverse()
 		//DO THIS
 		//get the row and col from curr_cell
 		int row = curr_cell->getRow();
-		int col = curr_cell->getCol();therwise delete it
+		int col = curr_cell->getCol();	//therwise delete it
 			if (maze->getElement(row, col) == 1) 
 			{
 				//update the maze location to TRIED

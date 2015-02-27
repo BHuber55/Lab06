@@ -4,7 +4,6 @@
 template < class T >
 class NextNode 
 {
-
    private:
       NextNode<T>* next;
       T* item;
@@ -15,7 +14,6 @@ class NextNode
       NextNode<T>* getNext();
       void setNext(NextNode<T>* next);
       T* getItem();
-
 };
 
 template < class T >
